@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home</title>
-<link rel="stylesheet" href="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous">
+<!-- Correct way to load FontAwesome -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
 
 
   <style>
@@ -316,6 +318,12 @@
   width: 100%;
   gap: 18px;
 }
+
+.nav-links a span {
+  color: var(--text);
+  font-size: 1rem;
+}
+    
 .nav-links a {
   color: var(--text);
   text-decoration: none;
@@ -443,25 +451,34 @@
 
  <aside class="sidebar">
   <div class="brand">
-    <h2 style="color: #ffd700; margin-bottom: 25px;">PingME</h2>
+    <h2 style="color:#ffd700;">PingME</h2>
   </div>
 
-  {% if "user_id" in session %}
   <div class="nav-links">
-    <a href="{{ url_for('index') }}"><i class="fa fa-home"></i> <span>Home</span></a>
+
+    <a href="{{ url_for('index') }}">
+      <i class="fa-solid fa-house"></i> <span>Home</span>
+    </a>
+
     <a href="{{ url_for('dashboard') }}">
       {% if user and user.profile_pic %}
-        <img src="{{ url_for('uploaded_file', filename=user.profile_pic) }}" alt="Profile Picture" 
-             style="width:28px; height:28px; border-radius:50%; object-fit:cover; border:2px solid var(--accent);">
+        <img src="{{ url_for('uploaded_file', filename=user.profile_pic) }}"
+             style="width:28px; height:28px; border-radius:50%; border:2px solid var(--accent); object-fit:cover;">
       {% else %}
-        <i class="fa fa-user-circle"></i>
+        <i class="fa-solid fa-user"></i>
       {% endif %}
       <span>Profile</span>
     </a>
-    <a href="{{ url_for('create_post') }}"><i class="fa fa-plus-circle"></i> <span>Create</span></a>
-    <a href="{{ url_for('logout') }}"><i class="fa fa-sign-out-alt"></i> <span>Logout</span></a>
+
+    <a href="{{ url_for('create_post') }}">
+      <i class="fa-solid fa-plus"></i> <span>Create</span>
+    </a>
+
+    <a href="{{ url_for('logout') }}">
+      <i class="fa-solid fa-right-from-bracket"></i> <span>Logout</span>
+    </a>
+
   </div>
-  {% endif %}
 </aside>
 
 
@@ -701,24 +718,9 @@ document.addEventListener("click", (e) => {
 
   <div class="overlay"></div>
 
-<script>
-  const menuToggle = document.querySelector(".menu-toggle");
-  const sidebar = document.querySelector(".sidebar");
-  const overlay = document.querySelector(".overlay");
 
-  menuToggle.addEventListener("click", () => {
-    sidebar.classList.toggle("active");
-    overlay.classList.toggle("active");
-    document.body.classList.toggle("sidebar-open");
-  });
-
-  overlay.addEventListener("click", () => {
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-    document.body.classList.remove("sidebar-open");
-  });
-</script>
 
 </body>
 </html>
+
 
