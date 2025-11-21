@@ -434,16 +434,10 @@
   </style>
 </head>
 <body>
-  <header>
-  <a class="navbar-brand" href="{{ url_for('index') }}" style="text-decoration: none; color: #ffd700;">
-    <h1>PingME</h1>
-  </a>
-</header>
+
 
  <aside class="sidebar">
-  <div class="brand">
-    <h2 style="color: #ffd700; margin-bottom: 25px;">PingME</h2>
-  </div>
+
 
   {% if "user_id" in session %}
   <div class="nav-links">
@@ -722,5 +716,6 @@ document.addEventListener("click", (e) => {
 
 </body>
 </html>
+
 
 
