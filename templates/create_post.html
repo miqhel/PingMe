@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Post - PingME</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --glass: rgba(255, 255, 255, 0.07);
+        --text: #e2e8f0;
+        --accent: #3b82f6;
+        --accent-2: #06b6d4;
+        --muted: #94a3b8;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding-top: 90px;
+      }
+
+      header {
+        background: rgba(30, 41, 59, 0.8);
+        backdrop-filter: blur(12px);
+        color: var(--text);
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      header h1 {
+        margin: 0;
+        font-size: 1.6em;
+        font-weight: 700;
+        color: #ffd700;
+      }
+
+      .card {
+        width: 500px;
+        background: var(--card);
+        padding: 25px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 0.6s ease;
+      }
+
+      h2 {
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      textarea {
+        width: 100%;
+        background: var(--glass);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        padding: 12px;
+        color: var(--text);
+        resize: none;
+        height: 120px;
+        margin-bottom: 15px;
+        transition: 0.2s;
+        font-size: 1rem;
+      }
+
+      textarea:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--accent);
+      }
+
+      .upload-box {
+        border: 2px dashed rgba(255, 255, 255, 0.12);
+        background: var(--glass);
+        padding: 25px;
+        text-align: center;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-bottom: 15px;
+      }
+
+      .upload-box:hover {
+        border-color: var(--accent);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      #attachment {
+        display: none;
+      }
+
+      .upload-box i {
+        font-size: 38px;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+
+      .preview {
+        width: 100%;
+        margin-top: 10px;
+        border-radius: 12px;
+        display: none;
+      }
+
+      button {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        filter: brightness(1.15);
+        transform: translateY(-2px);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <a
+        href="{{ url_for('index') }}"
+        style="text-decoration: none; color: inherit"
+      >
+        <h1>PingME</h1>
+      </a>
+    </header>
+
+    <div class="card">
+      <h2>Create a New Post</h2>
+
+      <form
+        action="{{ url_for('create_post') }}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <textarea
+          name="content"
+          placeholder="What's happening?..."
+          required
+        ></textarea>
+
+        <label class="upload-box" for="attachment">
+          <i class="fa fa-cloud-upload-alt"></i><br />
+          <span id="upload-text">Click to upload image or video</span>
+        </label>
+
+        <input
+          type="file"
+          name="attachment"
+          id="attachment"
+          accept="image/*,video/*"
+        />
+
+        <img id="preview" class="preview" />
+
+        <button type="submit">Post</button>
+      </form>
+    </div>
+
+    <script>
+      const fileInput = document.getElementById("attachment");
+      const preview = document.getElementById("preview");
+      const text = document.getElementById("upload-text");
+
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        text.textContent = file.name;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      });
+    </script>
+  </body>
+</html>

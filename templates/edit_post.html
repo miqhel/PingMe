@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post - PingME</title>
+</head>
+<body>
+<div class="edit-card card center"> 
+    <h2>Edit Post</h2> 
+    <form method="post" enctype="multipart/form-data" class="edit-form"> 
+        <label for="content">Post Content</label> 
+        <textarea id="content" name="content" required>{{ post.content }}</textarea> 
+        <label for="attachment">Update Image (optional)</label> {% if post.attachment %} 
+        <div class="current-img"> <p>Current Image:</p> <img src="{{ url_for('uploaded_file', filename=post.attachment) }}" alt="Post Image"> 
+        </div> {% endif %} <input type="file" id="attachment" name="attachment" accept="image/*"> <div class="form-actions"> 
+            <button type="submit" class="btn primary">Save Changes</button> <a href="{{ url_for('index') }}" class="btn">Cancel</a> 
+        </div> 
+    </form> 
+</div> 
+<style> .edit-card { max-width: 600px; margin: 30px auto; padding: 25px; background: #fff; border-radius: 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.08); } .edit-card h2 { margin-bottom: 20px; color: #1e3c72; font-size: 1.4rem; text-align: center; } .edit-form label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; } .edit-form textarea { width: 100%; min-height: 120px; padding: 10px; border: 1px solid #ddd; border-radius: 10px; font-size: 1rem; margin-bottom: 16px; resize: vertical; } .edit-form input[type="file"] { margin-bottom: 16px; } .current-img { margin-bottom: 16px; } .current-img img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 10px; margin-top: 8px; } .form-actions { display: flex; justify-content: space-between; gap: 12px; } .btn { padding: 10px 16px; border-radius: 10px; border: none; background: #efefef; cursor: pointer; font-weight: 600; transition: all 0.3s; text-align: center; text-decoration: none; display: inline-block; } .btn:hover { background: #ddd; } .btn.primary { background: #1da1f2; color: #fff; } .btn.primary:hover { background: #0d8ddb; } </style>
+
+</body>
+</html>
