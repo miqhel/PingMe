@@ -440,6 +440,30 @@
   </a>
 </header>
 
+ <aside class="sidebar">
+  <div class="brand">
+    <h2 style="color: #ffd700; margin-bottom: 25px;">PingME</h2>
+  </div>
+
+  {% if "user_id" in session %}
+  <div class="nav-links">
+    <a href="{{ url_for('index') }}"><i class="fa fa-home"></i> <span>Home</span></a>
+    <a href="{{ url_for('dashboard') }}">
+      {% if user and user.profile_pic %}
+        <img src="{{ url_for('uploaded_file', filename=user.profile_pic) }}" alt="Profile Picture" 
+             style="width:28px; height:28px; border-radius:50%; object-fit:cover; border:2px solid var(--accent);">
+      {% else %}
+        <i class="fa fa-user-circle"></i>
+      {% endif %}
+      <span>Profile</span>
+    </a>
+    <a href="{{ url_for('create_post') }}"><i class="fa fa-plus-circle"></i> <span>Create</span></a>
+    <a href="{{ url_for('logout') }}"><i class="fa fa-sign-out-alt"></i> <span>Logout</span></a>
+  </div>
+  {% endif %}
+</aside>
+  
+
  
 
   <script>
@@ -698,4 +722,5 @@ document.addEventListener("click", (e) => {
 
 </body>
 </html>
+
 
